@@ -100,3 +100,67 @@ export const trending = [
         'dollars':'$67,116,052,623'
     }
 ]
+
+export const cryptos = [
+    {
+        'number':'1',
+        'coins':'Bitchon-BTC',
+        'price':'$58,455,3532',
+        'percent':'-3.9%',
+        'percent_volume':'$58,455,3532',
+        'market':'$58,455,3532',
+        'last':'--------',
+    },{
+        'number':'1',
+        'coins':'Bitchon-BTC',
+        'price':'$58,455,3532',
+        'percent':'-3.9%',
+        'percent_volume':'$58,455,3532',
+        'market':'$58,455,3532',
+        'last':'--------',
+    },{
+        'number':'1',
+        'coins':'Bitchon-BTC',
+        'price':'$58,455,3532',
+        'percent':'-3.9%',
+        'percent_volume':'$58,455,3532',
+        'market':'$58,455,3532',
+        'last':'--------',
+    },{
+        'number':'1',
+        'coins':'Bitchon-BTC',
+        'price':'$58,455,3532',
+        'percent':'-3.9%',
+        'percent_volume':'$58,455,3532',
+        'market':'$58,455,3532',
+        'last':'--------',
+    },{
+        'number':'1',
+        'coins':'Bitchon-BTC',
+        'price':'$58,455,3532',
+        'percent':'-3.9%',
+        'percent_volume':'$58,455,3532',
+        'market':'$58,455,3532',
+        'last':'--------',
+    },{
+        'number':'1',
+        'coins':'Bitchon-BTC',
+        'price':'$58,455,3532',
+        'percent':'-3.9%',
+        'percent_volume':'$58,455,3532',
+        'market':'$58,455,3532',
+        'last':'--------',
+    },{
+        'number':'1',
+        'coins':'Bitchon-BTC',
+        'price':'$58,455,3532',
+        'percent':'-3.9%',
+        'percent_volume':'$58,455,3532',
+        'market':'$58,455,3532',
+        'last':'--------',
+    }
+]
+
+export const modalCrypto = [
+    
+]
