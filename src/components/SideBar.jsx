@@ -32,7 +32,7 @@ function SideBar ({isOpenSideBar,handleOpenSideBar}) {
                  {
                     menu.map((navlink, index)=>(
                         <li onClick={()=>handleFocusLink(navlink.title)} key={index} className={`px-2 py-3 ${focusedLink === navlink.title ? 'bg-tokena-blue text-white' : ''} rounded-xl 
-                         ${navlink.title === 'Login' ? 'pt-8' : ''}`}>
+                         ${navlink.title === 'Login' ? 'mt-8' : ''}`}>
                             <Link className={``} to={navlink.link}>
                             {navlink.subMenu === false ? (
                                 <p className={`flex items-center gap-1.5`}>

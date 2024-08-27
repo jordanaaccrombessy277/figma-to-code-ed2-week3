@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { arrow_up_blue,arrow_down_blue,chevron_right_gray,search_gray,chevron_down_dark_gray,chevron_down_white,ellipse,ellipse_light_gray,
    chevron_left_dark_gray,chevron_right_light_gray, chevron_right,chevron_up_down,chevron_up_down_gray
 
@@ -6,22 +6,62 @@ import { arrow_up_blue,arrow_down_blue,chevron_right_gray,search_gray,chevron_do
 import { useTheme } from '../context/ThemeContext'
 import { TrendingNegative,Crypto } from '../components/dashboardpage.components';
 import ModalCrypto from '../components/ModalCrypto'
-import { trending,cryptos } from '../constants';
+import { trending} from '../constants';
+import { fetchCryptos,fetchCrypto,fetchCategCryptos } from '../services/cryptoService';
+
 
 function DashboardPage() {
   
   const {theme} = useTheme();
   const [openCategories, setOpenCategories] = useState(false)
+  const [categories, setCategories] = useState([])
   const [openModalCrypto, setOpenModalCrypto] = useState(false)
-  const [modalCrypto, setModalCrypto] = useState({})
+  const [contentModalCrypto, setContentModalCrypto] = useState({})
+  const [cryptosList,setCryptosList] = useState([])
 
   const handleOpenCategories = () =>{
    setOpenCategories(!openCategories)
   }
 
-  const handleOpenModalCrypto = (element) =>{
+  const handleOpenModalCrypto = (elementId) =>{
+
+   if (openModalCrypto === false) {
+      const getCrypto = async () => {
+         const getCrypto = await fetchCrypto(elementId)
+         setContentModalCrypto(getCrypto)
+         console.log(getCrypto)
+      }
+      getCrypto()
+   }else setContentModalCrypto({})
+
    setOpenModalCrypto(!openModalCrypto)
+   
   }
+  
+  useEffect(()=>{
+    const getCryptos = async () =>{
+       try {
+         const getCryptos = await fetchCryptos('usd',10,1)
+         setCryptosList(getCryptos)
+       }catch (error) {
+         console.error('Fetch error cryptos:', error);
+       }
+    }
+
+    getCryptos()
+
+    const getCategs = async () =>{
+      try {
+         const getCategs = await fetchCategCryptos()
+         setCategories(getCategs)
+      }catch (error) {
+         console.error('Fetch error categ cryptos:', error);
+       }
+    }
+
+    getCategs()
+
+  },[])
 
   return (
     <div className={`px-6 py-5`}>
@@ -75,10 +115,9 @@ function DashboardPage() {
                         <img src={theme === 'light' ? chevron_down_dark_gray : chevron_down_white} className={`w-4.5 h-4.5 duration-100 ${openCategories ? 'rotate-180' : ''}`} alt="" />
                      </form>
                      <ul className={`absolute w-full z-20 duration-100 ${openCategories ? 'visible translate-y-1' : 'invisible translate-y-0'} w-full p-1.5 rounded-xl mt-1 border ${theme === "light" ? 'border-x-tokena-light-gray bg-tokena-white' : 'border-tokena-gray-opacity-20 bg-tokena-dark-blue-1'}`}>
-                        <li><a href="/" className={`text-sm w-full ${theme === 'dark' && 'text-tokena-light-gray'} inline-block px-5 py-2.5`}>Aeve Tokens</a></li>
-                        <li><a href="/" className={`text-sm w-full ${theme === 'dark' && 'text-tokena-light-gray'} inline-block px-5 py-2.5`}>Account Abstraction</a></li>
-                        <li><a href="/" className={`text-sm w-full ${theme === 'dark' && 'text-tokena-light-gray'} inline-block px-5 py-2.5`}>Adidas Ecosystem</a></li>
-                        <li><a href="/" className={`text-sm w-full ${theme === 'dark' && 'text-tokena-light-gray'} inline-block px-5 py-2.5`}>Adventure Games</a></li>   
+                        {categories.map((category)=>(
+                              <li key={category.category_id}><a href={`/categories/${category.category_id}`} className={`text-sm w-full ${theme === 'dark' && 'text-tokena-light-gray'} inline-block px-5 py-2.5`}>{category.name}</a></li>
+                        ))}
                      </ul>
                    </div>
        </div>
@@ -101,15 +140,18 @@ function DashboardPage() {
                         </tr>
                      </thead>
                      <tbody>
-                         {cryptos.map((element,index)=>(
-                            <Crypto key={index} theme={theme} price={element.price} percent={element.percent} percent_volume={element.percent_volume} coins={element.coins}
-                            market={element.market} last={element.last} handleOpenModalCrypto={()=>handleOpenModalCrypto(element)} />
+                         {cryptosList.map((element,index)=>(
+                            <Crypto  key={index} theme={theme} index={index} symbol={element.symbol} name_crypto={element.name} 
+                            image={element.image} current_price={element.current_price} market_cap={element.market_cap} 
+                            price_change_percentage_24h={element.price_change_percentage_24h}
+                            total_volume = {element.total_volume} handleOpenModalCrypto={()=>handleOpenModalCrypto(element.id)}
+                             />
                          ))}
                      </tbody>
                   </table>   
             </div>
        </div>
-       {openModalCrypto && <ModalCrypto theme={theme} handleOpenModalCrypto={handleOpenModalCrypto} openModalCrypto={openModalCrypto} />} 
+       {openModalCrypto && <ModalCrypto theme={theme} contentModalCrypto={contentModalCrypto} handleOpenModalCrypto={handleOpenModalCrypto} openModalCrypto={openModalCrypto} />} 
        <div className={`p-4 flex flex-col md:justify-between md:flex-row gap-3`}>
           <ul className={`flex flex-wrap gap-1.5`}>
              <li className={``}>
