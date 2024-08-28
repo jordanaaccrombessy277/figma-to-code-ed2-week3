@@ -1,4 +1,4 @@
-const API_KEY = 'CG-FH2WiAeUFufW8CmiYXRUwX1z'; // Remplacez par votre clé API
+const API_KEY = 'CG-FH2WiAeUFufW8CmiYXRUwX1z'; 
 
 export async function fetchCryptos(currency, per_page, page) {
     
@@ -74,8 +74,8 @@ export const fetchChart = async (coinId = 'solana', currency = 'usd', days = 7, 
       }
   
       const data = await response.json();
-      // data.prices contient les données de prix sur la période
-      return data.prices; // Array of [timestamp, price] pairs
+      
+      return data.prices; 
     } catch (error) {
       console.error("Erreur lors de la récupération des données pour le graphique :", error);
       return [];
