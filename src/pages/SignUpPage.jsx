@@ -1,11 +1,11 @@
 import React from 'react'
 import {logo} from '../assets'
-import {Input,InputPassword,InputEmail} from '../components/auth.components.jsx'
+import {Input,InputPassword,InputEmail} from '../components/auth.jsx'
 
 function SignUpPage() {
 
   return (
-   <div className={`w-full h-screen p-6 md:p-0 fixed flex flex-row mx-auto justify-center items-center top-0 left-0 bg-tokena-dark-gray-opacity-60`}>
+   <div className={`w-full h-auto md:h-screen p-6 md:p-0 fixed flex flex-row mx-auto justify-center items-center top-0 left-0 bg-tokena-dark-gray-opacity-60`}>
        <div className={`w-full md:w-1/3 rounded-2xl h-auto p-6 md:p-8 bg-tokena-white`}>
          <div className={`bg-tokena-blue-opacity7percent px-4 w-full h-16 rounded-xl flex items-center flex-row gap-3`}>
                  <div className={`bg-tokena-blue-opacity22percent w-9 h-9 rounded-xl flex justify-center items-center`}>

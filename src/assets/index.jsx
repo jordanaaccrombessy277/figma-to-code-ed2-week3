@@ -43,6 +43,13 @@ import bitchoin from './images/bitchoin.svg'
 import star_blue from './icons/star-blue.svg'
 import chevron_left_dark_gray from './icons/chevron-left-dark-gray.svg'
 import chevron_right_light_gray from './icons/chevron-right-light-gray.svg'
+import coinMarketCap from './images/coinMarketCap.svg'
+import comment from './icons/comment.svg'
+import comment_gray from './icons/comment-gray.svg'
+import heart from './icons/heart.svg'
+import heart_gray from './icons/heart-gray.svg'
+import arrow_down from './icons/arrow-down.svg'
+import arrow_down_light_gray from './icons/arrow-down-light-gray.svg'
 
 
 export {home,home_white,logo,news,news_white,activities,activities_white,cards, 
@@ -52,5 +59,6 @@ chevron_up_down_dark_gray,sun_gray,menu_gray,close,close_white,arrow_down_blue,
 arrow_up_blue,chevron_right_gray,trade_down_red,trade_up_green,sui,ginnan,solana,
 toncoin,search,search_gray,chevron_down_dark_gray,ellipse,ellipse_light_gray,
 bitchoin,star_blue,chevron_left_dark_gray,chevron_right,chevron_right_light_gray,
-chevron_up_down
+chevron_up_down,coinMarketCap,heart,heart_gray,comment,comment_gray,arrow_down,
+arrow_down_light_gray
 }

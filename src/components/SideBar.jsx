@@ -31,7 +31,7 @@ function SideBar ({isOpenSideBar,handleOpenSideBar}) {
             <ul className={`flex flex-col gap-0.5`}>
                  {
                     menu.map((navlink, index)=>(
-                        <li onClick={()=>handleFocusLink(navlink.title)} key={index} className={`px-2 py-3 ${focusedLink === navlink.title ? 'bg-tokena-blue text-white' : ''} rounded-xl 
+                        <li onClick={()=>handleFocusLink(navlink.title)} key={index} className={`px-2 py-3 ${focusedLink === navlink.title ? theme === 'light' ? 'bg-tokena-blue text-white' : 'bg-tokena-blue-opacity-70 border border-tokena-blue' : ''} rounded-xl 
                          ${navlink.title === 'Login' ? 'mt-8' : ''}`}>
                             <Link className={``} to={navlink.link}>
                             {navlink.subMenu === false ? (

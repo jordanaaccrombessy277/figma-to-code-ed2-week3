@@ -4,7 +4,7 @@ import { arrow_up_blue,arrow_down_blue,chevron_right_gray,search_gray,chevron_do
 
 } from '../assets'
 import { useTheme } from '../context/ThemeContext'
-import { TrendingNegative,Crypto } from '../components/dashboardpage.components';
+import { TrendingNegative,Crypto } from '../components/dashboardpage';
 import ModalCrypto from '../components/ModalCrypto'
 import { trending} from '../constants';
 import { fetchCryptos,fetchCrypto,fetchCategCryptos } from '../services/cryptoService';
@@ -18,6 +18,7 @@ function DashboardPage() {
   const [openModalCrypto, setOpenModalCrypto] = useState(false)
   const [contentModalCrypto, setContentModalCrypto] = useState({})
   const [cryptosList,setCryptosList] = useState([])
+  const [loadingModal, setLoadingModal] = useState(true)
 
   const handleOpenCategories = () =>{
    setOpenCategories(!openCategories)
@@ -27,15 +28,21 @@ function DashboardPage() {
 
    if (openModalCrypto === false) {
       const getCrypto = async () => {
-         const getCrypto = await fetchCrypto(elementId)
-         setContentModalCrypto(getCrypto)
-         console.log(getCrypto)
-      }
+      try {
+            const getCrypto = await fetchCrypto(elementId)
+            setContentModalCrypto(getCrypto)
+      }catch(error){
+      }finally{
+         setLoadingModal(false)
+      } 
+    }
       getCrypto()
-   }else setContentModalCrypto({})
+   }else{
+      setLoadingModal(true)
+   }
 
    setOpenModalCrypto(!openModalCrypto)
-   
+
   }
   
   useEffect(()=>{
@@ -62,6 +69,9 @@ function DashboardPage() {
     getCategs()
 
   },[])
+
+  
+
 
   return (
     <div className={`px-6 py-5`}>
@@ -115,8 +125,8 @@ function DashboardPage() {
                         <img src={theme === 'light' ? chevron_down_dark_gray : chevron_down_white} className={`w-4.5 h-4.5 duration-100 ${openCategories ? 'rotate-180' : ''}`} alt="" />
                      </form>
                      <ul className={`absolute w-full z-20 duration-100 ${openCategories ? 'visible translate-y-1' : 'invisible translate-y-0'} w-full p-1.5 rounded-xl mt-1 border ${theme === "light" ? 'border-x-tokena-light-gray bg-tokena-white' : 'border-tokena-gray-opacity-20 bg-tokena-dark-blue-1'}`}>
-                        {categories.map((category)=>(
-                              <li key={category.category_id}><a href={`/categories/${category.category_id}`} className={`text-sm w-full ${theme === 'dark' && 'text-tokena-light-gray'} inline-block px-5 py-2.5`}>{category.name}</a></li>
+                        {categories.map((element)=>(
+                              <li key={element.category_id}><a href={`/categories/${element.category_id}`} className={`text-sm w-full ${theme === 'dark' && 'text-tokena-light-gray'} inline-block px-5 py-2.5`}>{element.name}</a></li>
                         ))}
                      </ul>
                    </div>
@@ -129,9 +139,9 @@ function DashboardPage() {
             <div className={`overflow-x-auto`}>
                   <table className={`border-collapse w-full`}>
                      <thead>
-                        <tr className={` ${theme === 'light' ? 'bg-tokena-light-gray' : 'bg-tokena-light-gray-opacity10'}`}>
+                        <tr className={`${theme === 'light' ? 'bg-tokena-light-gray' : 'bg-tokena-light-gray-opacity10'}`}>
                            <th className={`text-sm w-14 font-[mono-sans] px-6 py-3`}>#</th>
-                           <th className={`text-sm text-left w-2/12 font-[mono-sans] px-6 py-3`}>Coins</th>
+                           <th className={`text-sm text-left w-3/12 font-[mono-sans] px-6 py-3`}>Coins</th>
                            <th className={`text-sm text-left w-2/12 font-[mono-sans] px-6 py-3`}>Price</th>
                            <th className={`text-sm text-left w-20 font-[mono-sans] px-6 py-3`}>24h</th>
                            <th className={`text-sm text-left w-2/12 font-[mono-sans] px-6 py-3`}>24h volume</th>
@@ -151,7 +161,7 @@ function DashboardPage() {
                   </table>   
             </div>
        </div>
-       {openModalCrypto && <ModalCrypto theme={theme} contentModalCrypto={contentModalCrypto} handleOpenModalCrypto={handleOpenModalCrypto} openModalCrypto={openModalCrypto} />} 
+       {openModalCrypto && <ModalCrypto theme={theme} loadingModal={loadingModal} contentModalCrypto={contentModalCrypto} handleOpenModalCrypto={handleOpenModalCrypto} openModalCrypto={openModalCrypto} />} 
        <div className={`p-4 flex flex-col md:justify-between md:flex-row gap-3`}>
           <ul className={`flex flex-wrap gap-1.5`}>
              <li className={``}>

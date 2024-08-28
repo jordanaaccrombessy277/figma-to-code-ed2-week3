@@ -1,8 +1,9 @@
 import {close,close_white,star_blue} from '../assets'
-function ModalCrypto ({theme,handleOpenModalCrypto,openModalCrypto,contentModalCrypto}){
+function ModalCrypto ({theme,loadingModal,handleOpenModalCrypto,openModalCrypto,contentModalCrypto}){
     return(
-        <div className={`w-full ${openModalCrypto ? 'visible' : 'invisible'} h-screen p-6 md:p-0 fixed flex flex-row mx-auto justify-center items-center top-0 left-0 bg-tokena-dark-gray-opacity-60`}>
-           <div className={`w-full md:w-1/3 rounded-2xl h-auto ${theme === 'light' ? 'bg-tokena-white' : 'bg-tokena-dark-blue-1'} p-5`}>
+        <div className={`w-full ${openModalCrypto ? 'visible' : 'invisible'} h-auto md:h-screen p-6 md:p-0 fixed flex flex-row mx-auto justify-center items-center top-0 left-0 bg-tokena-dark-gray-opacity-60`}>
+           { loadingModal ? <p className='text-2xl'>Loading...</p> : 
+            (<div className={`w-full md:w-1/3 rounded-2xl h-auto ${theme === 'light' ? 'bg-tokena-white' : 'bg-tokena-dark-blue-1'} p-5`}>
                  <div className={`flex justify-between items-center pb-6`}>
                    <p className={`font-[Mono-sans-bold] text-base`}>{contentModalCrypto.name}</p>
                    <p className={`p-2.5 rounded-xl ${theme === 'light' ? 'bg-tokena-white-opacity50' : 'bg-tokena-dark-blue-2'}`}>
@@ -65,7 +66,7 @@ function ModalCrypto ({theme,handleOpenModalCrypto,openModalCrypto,contentModalC
                       Description
                  </p>
                  <p className={`font-[Mono-sans] ${theme === 'light' ? 'text-tokena-dark-gray' : 'text-tokena-gray'} text-xs pt-2 pb-6`}>
-                   {contentModalCrypto?.description?.en?.slice(0, 250)}
+                   {contentModalCrypto?.description?.en?.slice(0, 250)}...
                  </p>
                  <div className={`font-[Mono-sans-medium] px-5 py-2.5 flex flex-row gap-1.5 justify-center w-full bg-tokena-blue-opacity-6 rounded-xl ${theme === 'light' ? '' : 'border-tokena-'} text-sm`}>
                     <img src={star_blue} className={`w-4.5 h-4.5 object-cover`} alt={`icon`} />
@@ -74,7 +75,7 @@ function ModalCrypto ({theme,handleOpenModalCrypto,openModalCrypto,contentModalC
                     </p>
                  </div>
 
-           </div>
+           </div>) }
         </div>
     )
 }

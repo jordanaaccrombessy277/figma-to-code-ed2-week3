@@ -62,3 +62,23 @@ export const fetchCategCryptos = async () =>{
         throw error;
     }
 }
+
+export const fetchChart = async (coinId = 'solana', currency = 'usd', days = 7, interval = 'daily') => {
+    const apiUrl = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}&interval=${interval}&x_cg_demo_api_key=${API_KEY}`;
+  
+    try {
+      const response = await fetch(apiUrl);
+      
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération des données : ${response.status}`);
+      }
+  
+      const data = await response.json();
+      // data.prices contient les données de prix sur la période
+      return data.prices; // Array of [timestamp, price] pairs
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données pour le graphique :", error);
+      return [];
+    }
+  }
+  
