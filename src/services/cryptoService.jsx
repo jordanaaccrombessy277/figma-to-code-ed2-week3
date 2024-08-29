@@ -63,22 +63,46 @@ export const fetchCategCryptos = async () =>{
     }
 }
 
-export const fetchChart = async (coinId = 'solana', currency = 'usd', days = 7, interval = 'daily') => {
-    const apiUrl = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}&interval=${interval}&x_cg_demo_api_key=${API_KEY}`;
+export const fetchChart = async (coinId, days,interval) => {
+    const apiUrl = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${days}&interval=${interval}&x_cg_demo_api_key=${API_KEY}`;
   
     try {
-      const response = await fetch(apiUrl);
-      
-      if (!response.ok) {
-        throw new Error(`Erreur lors de la récupération des données : ${response.status}`);
+        const response = await fetch(apiUrl);
+    
+        if (!response.ok) {
+          throw new Error(`Erreur lors de la récupération des données : ${response.status}`);
+        }
+    
+        const data = await response.json();
+    
+        // Regrouper les données par mois
+        const monthlyPrices = data.prices.reduce((acc, [timestamp, price]) => {
+          const date = new Date(timestamp);
+          const month = date.getMonth();
+          const year = date.getFullYear();
+          const key = `${year}-${month}`;
+    
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+    
+          acc[key].push(price);
+          return acc;
+        }, {});
+    
+        // Calculer le prix moyen par mois
+        const monthlyAveragePrices = Object.entries(monthlyPrices).map(([key, prices]) => {
+          const averagePrice = prices.reduce((sum, price) => sum + price, 0) / prices.length;
+          const [year, month] = key.split('-');
+          const date = new Date(year, month).getTime();
+          return [date, averagePrice];
+        });
+    
+        return monthlyAveragePrices;
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données pour le graphique :", error);
+        return [];
       }
+}
   
-      const data = await response.json();
-      
-      return data.prices; 
-    } catch (error) {
-      console.error("Erreur lors de la récupération des données pour le graphique :", error);
-      return [];
-    }
-  }
   

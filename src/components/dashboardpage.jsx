@@ -1,7 +1,5 @@
 import { trade_down_red,trade_up_green } from "../assets"
 
-
-
 export const TrendingNegative = ({theme,title,subtitle,image,percent,number,dollars,isPositif}) =>{
     return (
         <div className={`border ${theme === "light" ? 'border-x-tokena-light-gray' : 'border-tokena-gray-opacity-20'} rounded-xl p-3 flex flex-col gap-2.5`}>
@@ -47,7 +45,7 @@ export const Crypto = ({theme,index, symbol,name_crypto,image,current_price,mark
             <td className={`text-sm px-6 w-2/12 py-3`}>${total_volume.toLocaleString('en-US')}</td>
             <td className={`text-sm px-6 w-2/12 py-3`}>${market_cap.toLocaleString('en-US')}</td>
             <td className={`text-sm px-6 w-2/12 py-3`}>
-              ----
+                ---
             </td>
         </tr>
     )

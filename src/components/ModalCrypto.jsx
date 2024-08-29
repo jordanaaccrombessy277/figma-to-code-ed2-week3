@@ -1,5 +1,7 @@
 import {close,close_white,star_blue} from '../assets'
-function ModalCrypto ({theme,loadingModal,handleOpenModalCrypto,openModalCrypto,contentModalCrypto}){
+import {PriceChart} from './PriceChart'
+
+function ModalCrypto ({theme,loadingModal,handleOpenModalCrypto,openModalCrypto,contentModalCrypto,chartCryptoForMonths}){
     return(
         <div className={`w-full ${openModalCrypto ? 'visible' : 'invisible'} h-auto md:h-screen p-6 md:p-0 fixed flex flex-row mx-auto justify-center items-center top-0 left-0 bg-tokena-dark-gray-opacity-60`}>
            { loadingModal ? <p className='text-2xl'>Loading...</p> : 
@@ -11,7 +13,7 @@ function ModalCrypto ({theme,loadingModal,handleOpenModalCrypto,openModalCrypto,
                    </p>
                  </div>
                  <div className={`h-44 pb-6`}>
-                      Charts
+                    <PriceChart chartCryptoForNumberdays={chartCryptoForMonths} />
                  </div>
                  <div className={`flex justify-between items-center pb-6`}>
                    <div className="flex flex-row gap-2.5 items-center">

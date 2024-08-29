@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext'
 import { TrendingNegative,Crypto } from '../components/dashboardpage';
 import ModalCrypto from '../components/ModalCrypto'
 import { trending} from '../constants';
-import { fetchCryptos,fetchCrypto,fetchCategCryptos } from '../services/cryptoService';
+import { fetchCryptos,fetchCrypto,fetchCategCryptos,fetchChart } from '../services/cryptoService';
 
 
 function DashboardPage() {
@@ -19,6 +19,7 @@ function DashboardPage() {
   const [contentModalCrypto, setContentModalCrypto] = useState({})
   const [cryptosList,setCryptosList] = useState([])
   const [loadingModal, setLoadingModal] = useState(true)
+  const [chartCryptoForMonths,setChartCryptoForMonths] = useState([])
 
   const handleOpenCategories = () =>{
    setOpenCategories(!openCategories)
@@ -31,6 +32,8 @@ function DashboardPage() {
       try {
             const getCrypto = await fetchCrypto(elementId)
             setContentModalCrypto(getCrypto)
+            const getChartCryptoForMonths = await fetchChart(elementId,365,'daily')
+            setChartCryptoForMonths(getChartCryptoForMonths)
       }catch(error){
       }finally{
          setLoadingModal(false)
@@ -67,6 +70,7 @@ function DashboardPage() {
     }
 
     getCategs()
+
 
   },[])
 
@@ -154,14 +158,14 @@ function DashboardPage() {
                             <Crypto  key={index} theme={theme} index={index} symbol={element.symbol} name_crypto={element.name} 
                             image={element.image} current_price={element.current_price} market_cap={element.market_cap} 
                             price_change_percentage_24h={element.price_change_percentage_24h}
-                            total_volume = {element.total_volume} handleOpenModalCrypto={()=>handleOpenModalCrypto(element.id)}
+                            total_volume = {element.total_volume} handleOpenModalCrypto={()=>handleOpenModalCrypto(element.id)}                           
                              />
                          ))}
                      </tbody>
                   </table>   
             </div>
        </div>
-       {openModalCrypto && <ModalCrypto theme={theme} loadingModal={loadingModal} contentModalCrypto={contentModalCrypto} handleOpenModalCrypto={handleOpenModalCrypto} openModalCrypto={openModalCrypto} />} 
+       {openModalCrypto && <ModalCrypto theme={theme} loadingModal={loadingModal} contentModalCrypto={contentModalCrypto} handleOpenModalCrypto={handleOpenModalCrypto} openModalCrypto={openModalCrypto} chartCryptoForMonths={chartCryptoForMonths} />} 
        <div className={`p-4 flex flex-col md:justify-between md:flex-row gap-3`}>
           <ul className={`flex flex-wrap gap-1.5`}>
              <li className={``}>
